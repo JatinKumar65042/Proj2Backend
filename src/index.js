@@ -3,26 +3,22 @@ import dotenv from "dotenv"
 import mongoose from "mongoose";
 import { DB_NAME } from "./constants.js";
 import connectDB from "./db/index.js";
+import { app } from "./app.js";
 
 dotenv.config({
     path : "./env"
 })
 
-
 connectDB()
-.then( () => {
-    app.on("errror", (error) =>{
-        console.log("ERRR:", error);
-        throw error
-    })
+.then(() => {
     app.listen(process.env.PORT || 8000, () => {
-        console.log(`Server is running on https://localhost:${process.env.PORT}`) ;
+        console.log(`⚙️   Server is running at http://localhost:${process.env.PORT}/api/v1/`);
     })
+})
+.catch((err) => {
+    console.log("MONGO db connection failed !!! ", err);
+})
 
-} )
-.catch( (err) => {
-    console.log("MONGODB Connection failed!!! ", err)
-} )
 /*
 import express from "express"
 const app = express() ;
